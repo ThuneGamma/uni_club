@@ -24,7 +24,8 @@ public class Club implements Serializable {
      * 社团编号
      */
     @TableId(value = "num")
-    private Integer num;
+//    private Integer num;
+    private String num;
     /**
      * 社团名称
      */
@@ -46,11 +47,11 @@ public class Club implements Serializable {
     private Integer status;
 
 
-    public Integer getNum() {
+    public String getNum() {
         return num;
     }
 
-    public void setNum(Integer num) {
+    public void setNum(String num) {
         this.num = num;
     }
 

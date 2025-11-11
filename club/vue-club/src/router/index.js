@@ -62,7 +62,17 @@ export default new Router({
 			path: '/files',
 			component:resolve => require(['@/components/file/FileList'],resolve)
 		},
-		
+		{
+			name: 'Login', 
+			path: '/login', 
+			component: resolve => require(['@/components/Login/login.vue'], resolve) 
+
+		},
+		{
+			name: 'Register',
+			path: '/register',
+			component:resolve => require(['@/components/Login/Register.vue'],resolve)
+		},
 		{
 			path: '*',
 			redirect: "/"

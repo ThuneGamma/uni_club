@@ -10,6 +10,7 @@ import com.feng.util.ResponseResultUtil;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,7 +64,7 @@ public class FileController {
     @ApiOperation("添加新闻文件")
     @PostMapping("/passage")
     public ResponseResult savePassageFile(@Valid @RequestBody File file) {
-        file.setActivityId(0);
+        file.setActivityId(null);
         if (file.getFileTypeId() == null) {
             file.setFileTypeId(FileEnum.PASSAGE_IMG.getFileId());
         }

@@ -32,5 +32,5 @@ public interface UserService{
 
     User getOneByAccount(String account);
 
-    User register(User user,String rePassWord);
+    User register(User user);
 }

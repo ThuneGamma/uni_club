@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.enums.IdType;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -41,7 +42,7 @@ public class User implements Serializable {
      */
     private String institute;
     @NotNull(message = "用户账号不能为空")
-    @Email(message = "请输入合法邮箱")
+//    @Email(message = "请输入合法邮箱")
     private String account;
 //    @JsonIgnore
     @NotNull(message = "用户密码不能为空")
@@ -50,14 +51,14 @@ public class User implements Serializable {
     /**
      * 用户创建时间
      */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd")
-    @DateTimeFormat(pattern = "yyyy年MM月dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
     private Date createTime;
     /**
      * 用户是否激活（默认0，未激活；1激活）
      */
     private Boolean isActive;
-    private String lastLoginTime;
+    private Date lastLoginTime;
 
 
     public Integer getId() {
@@ -124,11 +125,11 @@ public class User implements Serializable {
         this.isActive = isActive;
     }
 
-    public String getLastLoginTime() {
+    public Date getLastLoginTime() {
         return lastLoginTime;
     }
 
-    public void setLastLoginTime(String lastLoginTime) {
+    public void setLastLoginTime(Date lastLoginTime) {
         this.lastLoginTime = lastLoginTime;
     }
 

@@ -6,7 +6,7 @@
 			</template>
 			<el-menu-item index="1-1"><router-link :to="{ name: 'PassageList' }" tag="div">文章列表</router-link></el-menu-item>
 			<el-menu-item index="1-2"><router-link :to="{ name: 'AddPassage' }" tag="div">添加文章</router-link></el-menu-item>
-			<el-menu-item index="1-3"><router-link :to="{ name: 'PassageTypeList' }" tag="div">文章类型列表</router-link></el-menu-item>
+			<!-- <el-menu-item index="1-3"><router-link :to="{ name: 'PassageTypeList' }" tag="div">文章类型列表</router-link></el-menu-item> -->
 		</el-submenu>
 		<el-submenu index="2">
 			<template slot="title">
@@ -14,7 +14,7 @@
 			</template>
 			<el-menu-item index="2-1"><router-link :to="{ name: 'ActivityList' }" tag="div">活动列表</router-link></el-menu-item>
 			<el-menu-item index="2-2"><router-link :to="{ name: 'AddActivity' }" tag="div">添加活动</router-link></el-menu-item>
-			<el-menu-item index="2-3"><router-link :to="{ name: 'ActivityTypeList' }" tag="div">活动类型列表</router-link></el-menu-item>
+			<!-- <el-menu-item index="2-3"><router-link :to="{ name: 'ActivityTypeList' }" tag="div">活动类型列表</router-link></el-menu-item> -->
 		</el-submenu>
 		<el-submenu index="3">
 			<template slot="title">
@@ -22,7 +22,7 @@
 			</template>
 			<el-menu-item index="3-1"><router-link :to="{ name: 'ClubList' }" tag="div">社团列表</router-link></el-menu-item>
 			<el-menu-item index="3-2"><router-link :to="{ name: 'AddClub' }" tag="div">添加社团</router-link></el-menu-item>
-			<el-menu-item index="1-3"><router-link :to="{ name: 'ClubTypeList' }" tag="div">社团类型列表</router-link></el-menu-item>
+			<!-- <el-menu-item index="1-3"><router-link :to="{ name: 'ClubTypeList' }" tag="div">社团类型列表</router-link></el-menu-item> -->
 		</el-submenu>
 		<el-submenu index="4">
 			<template slot="title">
@@ -30,7 +30,7 @@
 			</template>
 			<el-menu-item index="4-1"><router-link :to="{ name: 'UserList' }" tag="div">用户列表</router-link></el-menu-item>
 			<el-menu-item index="4-2"><router-link :to="{ name: 'AddUser' }" tag="div">添加用户</router-link></el-menu-item>
-			<el-menu-item index="4-3"><router-link :to="{ name: 'UserRoleList' }" tag="div">用户角色列表</router-link></el-menu-item>
+			<!-- <el-menu-item index="4-3"><router-link :to="{ name: 'UserRoleList' }" tag="div">用户角色列表</router-link></el-menu-item> -->
 		</el-submenu>
 		<el-submenu index="5">
 			<template slot="title">

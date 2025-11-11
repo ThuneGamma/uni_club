@@ -15,8 +15,11 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,18 +44,32 @@ public class UserServiceImpl implements UserService {
         return new PageInfo<>(userList);
     }
 
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     @Override
     public User login(User user) {
+        // 1. 账号校验（原有逻辑不变）
         List<User> userList = getByAccount(user.getAccount());
         if (userList.isEmpty()) {
             throw new BusinessException(ErrorEnum.USER_NAME_ERROR);
         }
         User loginUser = userList.get(0);
+
+        // 2. 密码校验（明文对比，保持原有逻辑）
         if (!loginUser.getPassword().equals(user.getPassword())) {
             throw new BusinessException(ErrorEnum.USER_PASSWORD_ERROR);
         }
+
+        // 3. 新增：登录成功后更新最后登录时间（核心修改）
+        Date lastLoginTime = new Date(); // 生成当前时间字符串
+        userMapper.updateLastLoginTime(loginUser.getId(), lastLoginTime); // 调用Mapper更新数据库
+        loginUser.setLastLoginTime(lastLoginTime); // 更新用户对象的登录时间，返回给前端
+
+        // 4. 新增：脱敏密码（避免密码泄露，关键！）
+        loginUser.setPassword(null);
+
         return loginUser;
     }
+
 
     @Override
     public List<User> getByAccount(String account) {
@@ -101,22 +118,31 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User register(User user, String rePassword) {
-//        Assert.notNull(rePassword,"确认密码不能为空！");
+    public User register(User user) {
+        // 3. 账号查重（简化：只判断账号是否存在，不判断是否激活）
         List<User> userList = getByAccount(user.getAccount());
         if (!userList.isEmpty()) {
-            User user1 = userList.get(0);
-            if (user1.getActive()) {
-                throw new BusinessException(ErrorEnum.BUSINESS_EXCEPTION.setMsg("邮箱已经激活，请直接登录"));
-            } else {
-                throw new BusinessException(ErrorEnum.BUSINESS_EXCEPTION.setMsg("请尽快激活邮箱"));
-            }
+            // 直接提示“账号已存在”，删掉激活相关判断
+            throw new BusinessException(ErrorEnum.BUSINESS_EXCEPTION.setMsg("账号已存在，请更换账号"));
         }
-        if (user.getPassword().equals(rePassword)) {
-            throw new BusinessException(ErrorEnum.USER_RE_PASSWORD_ERROR);
-        }
-        userMapper.insert(user);
 
+        // 4. 填充默认值（保留，isActive 仍设为 false 或 true，按你需求）
+        if (!StringUtils.hasText(user.getName())) {
+            user.setName("");
+        }
+        if (!StringUtils.hasText(user.getInstitute())) {
+            user.setInstitute("");
+        }
+        if (user.getActive() == null) {
+            user.setActive(false); // 默认未激活，或改为 true（注册后直接激活）
+        }
+        if (user.getSex() == null) {
+            user.setSex(0);
+        }
+
+        // 5. 保存用户
+        userMapper.insert(user);
+        user.setPassword(null);
         return user;
     }
 }

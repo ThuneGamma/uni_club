@@ -10,6 +10,6 @@
 
 <style>
 	.hr{
-		border:2px solid #9a0e14;
+		border:2px solid #15c24f;
 	}
 </style>

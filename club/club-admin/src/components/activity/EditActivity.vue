@@ -13,7 +13,7 @@
 		</el-form-item>
 		<el-form-item label="查看文件" v-if="fileList != null">
 			<div v-for="file in fileList" :key="file.id">
-				<img :src="'/fileServer' + file.filePath" class="show-image" :alt="file.fileName" v-if="isImage(file.fileName)" />
+				<img :src="'http://localhost:8013/fileServer' + file.filePath" class="show-image" :alt="file.fileName" v-if="isImage(file.fileName)" />
 				<a :href="'/fileServer' + file.filePath" v-else>{{ file.fileName }}</a>
 			</div>
 		</el-form-item>

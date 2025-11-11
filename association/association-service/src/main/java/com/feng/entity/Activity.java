@@ -43,16 +43,16 @@ public class Activity implements Serializable {
     /**
      * 活动举行时间
      */
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd")
-    @DateTimeFormat(pattern = "yyyy年MM月dd")
-    private String holdTime;
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
+    private Date holdTime;
     /**
      * 活动介绍
      */
     @NotNull(message = "活动简介不能为空")
     private String introduce;
-    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd")
-    @DateTimeFormat(pattern = "yyyy年MM月dd")
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy年MM月dd日")
+    @DateTimeFormat(pattern = "yyyy年MM月dd日")
     private Date applyTime;
     /**
      * 社团联是否批准

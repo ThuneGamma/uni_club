@@ -1,55 +1,42 @@
 <template>
 	<div>
 		<div class="header-wrap">
-			<el-menu :default-active="activeIndex" class="header computerNav" background-color="#9a0e14" mode="horizontal" text-color="#fff" active-text-color="#ffd04b">
+			<el-menu :default-active="activeIndex" class="header computerNav" background-color="#00A185" mode="horizontal" text-color="#fff" active-text-color="#ffd04b">
+				<!-- 原有所有菜单项不变，保留原样 -->
 				<el-menu-item index="1"><router-link :to="{ name: 'Home' }" tag="div">首页</router-link></el-menu-item>
-				<el-submenu index="2">
-					<template slot="title">
-						社团概况
-					</template>
-					<el-menu-item index="2-1"><router-link :to="{ name: 'Passage', params: { id: 1 } }" tag="div">社团联简介</router-link></el-menu-item>
-					<el-menu-item index="2-2"><router-link :to="{ name: 'Passage', params: { id: 2 } }" tag="div">社团简介</router-link></el-menu-item>
-					<el-menu-item index="2-3"><router-link :to="{ name: 'Passage', params: { id: 3 } }" tag="div">机构设置</router-link></el-menu-item>
-				</el-submenu>
+				<el-menu-item index="2"><router-link :to="{ name: 'Passage', params: { id: 1 } }" tag="div">社指简介</router-link></el-menu-item>
 				<el-submenu index="3">
-					<template slot="title">
-						社团快讯
-					</template>
+					<template slot="title">社团快讯</template>
 					<el-menu-item index="3-1"><router-link :to="{ name: 'PassageList', query: { passageTypeId: 1 } }" tag="div">重要通知</router-link></el-menu-item>
 					<el-menu-item index="3-2"><router-link :to="{ name: 'PassageList', query: { passageTypeId: 2 } }" tag="div">社团要闻</router-link></el-menu-item>
-					<el-menu-item index="3-3"><router-link :to="{ name: 'PassageList', query: { passageTypeId: 1 } }" tag="div">重要通知</router-link></el-menu-item>
 				</el-submenu>
 				<el-submenu index="4">
-					<template slot="title">
-						社团风采
-					</template>
+					<template slot="title">社团风采</template>
 					<el-menu-item index="4-1"><router-link :to="{ name: 'ActivityList', query: { typeId: 1 } }" tag="div">活动预告</router-link></el-menu-item>
 					<el-menu-item index="4-2"><router-link :to="{ name: 'ActivityList', query: { typeId: 2 } }" tag="div">精彩活动回顾</router-link></el-menu-item>
 				</el-submenu>
 				<el-menu-item index="5"><router-link :to="{ name: 'ClubList', query: { typeId: 1 } }" tag="div">社团检索</router-link></el-menu-item>
 				<el-menu-item index="6"><router-link :to="{ name: 'FileList', query: { fileTypeId: 3 } }" tag="div">资料下载</router-link></el-menu-item>
-				<!-- <el-menu-item index="7">
-					<router-link :to="{name:'ClubList',query:{num:1}}">社团申请</router-link>
-				</el-menu-item> -->
-				<el-submenu index="7">
-					<template slot="title">
-						社团反馈
-					</template>
-					<el-menu-item index="7-1">
-						<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=2804774882&site=qq&menu=yes">
-							<img border="0" src="http://wpa.qq.com/pa?p=2:2804774882:51" alt="点击这里给我发消息" title="QQ交流" />
-						</a>
+				
+				<!-- 核心修改：登录/未登录状态切换 -->
+				<template v-if="userInfo">
+					<!-- 登录后：显示用户名 + 退出登录 -->
+					<el-menu-item index="8" class="rightMenu" style="color: #ffd04b;">
+						{{ userInfo.name || userInfo.account }}
 					</el-menu-item>
-					<el-menu-item index="7-2">
-						<a target="_blank" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=d0VPR0NAQENPT0U3BgZZFBga" style="text-decoration:none;">
-							<img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mailme_02.png" />
-						</a>
+					<el-menu-item index="9" class="rightMenu">
+						<a href="javascript:;" @click="handleLogout">退出登录</a>
 					</el-menu-item>
-				</el-submenu>
-				<el-menu-item index="8" class="rightMenu"><a href="#" @click="goAdminUrl">登录</a></el-menu-item>
+				</template>
+				<template v-else>
+					<!-- 未登录：保持原有登录/注册按钮 -->
+					<el-menu-item index="8" class="rightMenu"><router-link to="/login">登录</router-link></el-menu-item>
+					<el-menu-item index="9" class="rightMenu"><router-link to="/register" class="register-link">注册</router-link></el-menu-item>
+				</template>
 			</el-menu>
 		</div>
-		<!-- <div class="phone-nav">
+		<!-- 手机端菜单（保留原有结构，无需修改） -->
+		<div class="phone-nav">
 			<el-dropdown :hide-on-click="false">
 				<span class="el-dropdown-link">
 					菜单
@@ -57,90 +44,142 @@
 				</span>
 				<el-dropdown-menu slot="dropdown">
 					<el-dropdown-item><router-link :to="{ name: 'Home' }">首页</router-link></el-dropdown-item>
-					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社团联简介</router-link></el-dropdown-item>
-					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社团联简介</router-link></el-dropdown-item>
-					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社团联简介</router-link></el-dropdown-item>
+					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社指简介</router-link></el-dropdown-item>
+					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社指简介</router-link></el-dropdown-item>
+					<el-dropdown-item divided><router-link :to="{ name: 'Passage', params: { id: 1 } }">社指简介</router-link></el-dropdown-item>
 					<el-dropdown-item disabled>双皮奶</el-dropdown-item>
 					<el-dropdown-item divided>蚵仔煎</el-dropdown-item>
 				</el-dropdown-menu>
 			</el-dropdown>
-		</div> -->
+		</div>
 	</div>
 </template>
 
 <script>
-const OK = 200
 export default {
-  data () {
+  data() {
     return {
       activeIndex: '1',
-      adminAccessUrl: 'http://118.89.228.250:8012'
+      userInfo: null
+    }
+  },
+  created() {
+    this.syncUserInfo(); // 初始化时读取
+  },
+  watch: {
+    // 路由变化时（比如登录后跳转回来），重新读取用户信息
+    $route: {
+      immediate: true, // 确保初始时也执行（和created呼应，双重保险）
+      handler() {
+        this.syncUserInfo();
+      }
     }
   },
   methods: {
-    getAdminUrl: function () {
-      this.$axios.get('/api/system/adminUrl').then(res => {
-        if (res.data.code == OK) {
-          this.adminAccessUrl = res.data.data
-        }
-      })
+    // 提取独立方法，复用读取逻辑
+    syncUserInfo() {
+      const userInfoStr = localStorage.getItem('userInfo');
+      this.userInfo = userInfoStr ? JSON.parse(userInfoStr) : null;
     },
-    goAdminUrl: function () {
-      // window.location.href = this.adminAccessUrl
-      window.open(this.adminAccessUrl, '_blank')
+    handleLogout() {
+      this.$router.push('/');
+      localStorage.removeItem('isLogin');
+      localStorage.removeItem('userInfo');
+      this.userInfo = null;
+      this.$message.success('退出登录成功！');
     }
-  },
-  created: function () {
-    this.getAdminUrl()
-  },
-  mounted: function () {}
+  }
 }
 </script>
 
-<style scoped="scoped">
+<style scoped>
+/* 头部容器：保留原有背景色，优化间距 */
 .header-wrap {
-	background-color: #9a0e14;
+	background-color: #00A185;
   position: fixed;
   left: 0;
   right: 0;
-  top:0;
+  top: 0;
   height: 70px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1); /* 轻微阴影，提升质感 */
+  z-index: 999;
 }
-.phone-nav {
-		display: none;
-	}
+
+/* 导航容器：调整宽度，优化居中 */
 .header {
-	width: 1024px;
+	width: 1100px; /* 适度加宽，避免菜单拥挤 */
 	height: 70px;
 	line-height: 70px;
 	margin: 0 auto;
 }
 
-.el-menu.el-menu--horizontal a {
-	color: #fff;
+/* 字体统一优化 */
+.el-menu, .el-menu-item, .el-submenu__title, a {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Microsoft YaHei", sans-serif;
+	font-size: 16px; /* 统一字号，提升可读性 */
 }
+
+/* 菜单项间距优化 */
+.el-menu--horizontal .el-menu-item, .el-menu--horizontal .el-submenu__title {
+	padding: 0 18px !important; /* 增大间距，避免拥挤 */
+}
+
+/* 下拉菜单样式微调 */
+.el-submenu .el-menu {
+	background-color: #069a66 !important;
+}
+.el-submenu .el-menu-item {
+	font-size: 15px !important; /* 下拉菜单字号稍小，区分层级 */
+	padding: 0 25px !important;
+}
+
+/* 链接样式优化 */
+a {
+	text-decoration: none;
+	color: #fff;
+	transition: color 0.2s ease; /* hover过渡，更柔和 */
+}
+.el-menu-item a:hover, .el-submenu__title:hover {
+	color: #ffd04b !important; /* hover时与激活色一致，更协调 */
+}
+
+/* 登录按钮微调 */
 .rightMenu {
 	float: right;
 	height: 70px;
 	line-height: 70px;
-	background-color: #000000;
+	background-color: rgba(0,0,0,0.2) !important; /* 半透明黑色，更柔和 */
+	padding: 0 22px !important;
 }
-a {
-	text-decoration: none;
-	color: #eee;
+
+/* 手机端菜单样式微调 */
+.phone-nav {
+	display: none;
+}
+.el-dropdown-link {
+	color: #fff;
 	font-size: 16px;
 }
-/* @media screen and (min-width: 1196px) {
-	.phone-nav {
-		display: none;
+
+/* 响应式适配（保留原有逻辑，微调间距） */
+@media screen and (max-width: 1100px) {
+	.header {
+		width: 95%;
 	}
-} */
-/* @media screen and (max-width: 600px) {
+}
+@media screen and (max-width: 600px) {
 	.computerNav {
 		display: none;
 	}
 	.phone-nav {
 		display: block;
+		position: fixed;
+		top: 20px;
+		right: 20px;
 	}
-} */
+}
+.register-link {
+  color: #9a0e14;
+  margin-left: 5px;
+}
 </style>

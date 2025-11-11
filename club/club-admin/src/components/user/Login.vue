@@ -1,8 +1,8 @@
 <template>
   <el-form :model="user" status-icon ref="userForm" label-width="100px" class="userForm">
-    <!-- 邮箱输入框 -->
+    <!-- 账号输入框 -->
     <el-form-item label="账号">
-      <el-input v-model="user.account" placeholder="请输入你的邮箱"></el-input>
+      <el-input v-model="user.account" placeholder="请输入你的账号"></el-input>
     </el-form-item>
     <!-- 密码输入框 -->
     <el-form-item label="密码" prop="password">
@@ -46,7 +46,7 @@ export default {
             this.$router.push({ name: 'Home' });
           } else {
             this.$message.error(res.data.message);
-            this.refreshCode();
+            // this.refreshCode();
           }
         })
         // 2. 修复：catch 用箭头函数，避免 this 指向丢失
@@ -54,10 +54,10 @@ export default {
           this.$message.error('请求失败：' + error.message);
         });
     },
-    refreshCode() {
-      this.captchaUrl = '/api/users/getKaptcha?time=' + new Date().getTime();
-      console.log('更新验证码地址：', this.captchaUrl);
-    },
+    // refreshCode() {
+    //   this.captchaUrl = '/api/users/getKaptcha?time=' + new Date().getTime();
+    //   console.log('更新验证码地址：', this.captchaUrl);
+    // },
     // 3. 修复：重置表单功能（之前是空实现）
     resetForm() {
       this.$refs.userForm.resetFields(); // 重置表单字段
@@ -75,7 +75,7 @@ export default {
   created() {
     // this.tryToAminPage();
     this.test(); // 初始化测试账号密码
-    this.refreshCode(); // 生成验证码（模板未使用，可根据需求添加）
+    // this.refreshCode(); // 生成验证码（模板未使用，可根据需求添加）
   }
 };
 </script>

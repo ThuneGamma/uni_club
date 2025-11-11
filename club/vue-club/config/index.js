@@ -16,14 +16,14 @@ module.exports = {
 				// target: 'http://localhost:8010',
 				changeOrigin: true,
 				pathRewrite: {
-					'^/api': '/club/api'
+					'^/api': ''
 				},
 			},
 			'/admin': {
 				target: 'http://localhost:8082',
 				changeOrigin: true,
 				pathRewrite: {
-					'^/admin': '/club/admin'
+					'^/admin': ''
 				}
 			},
 			'/fileServer': {

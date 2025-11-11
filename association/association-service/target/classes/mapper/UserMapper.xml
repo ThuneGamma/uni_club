@@ -23,4 +23,22 @@
         id, name, sex, institute, account, password, create_time, is_active, last_login_time
     </sql>
 
+    <!-- 新增：getOneByAccount 方法的SQL映射（账号查重核心） -->
+    <select id="getOneByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" /> <!-- 复用通用列名，避免重复书写 -->
+        FROM
+        user
+        WHERE
+        account = #{account} <!-- 匹配传入的账号参数 -->
+        LIMIT 1 <!-- 只查一条，提高查询效率 -->
+    </select>
+
+    <!-- 新增：更新最后登录时间 -->
+    <update id="updateLastLoginTime" parameterType="java.util.Map">
+        UPDATE user
+        SET last_login_time = #{lastLoginTime}
+        WHERE id = #{userId}
+    </update>
+
 </mapper>

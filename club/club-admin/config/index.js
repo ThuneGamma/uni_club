@@ -22,10 +22,8 @@ module.exports = {
 			'/fileServer': {
 				target: 'http://localhost:8013',
 				// target: 'http://localhost:8010',
-				changeOrigin: true,
-				pathRewrite: {
-					'^/fileServer': '/'
-				}
+				changeOrigin: true
+				
 			}
 			// '/api': 'http://localhost:8010/club/api/'
 		},

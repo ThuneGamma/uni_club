@@ -1,10 +1,10 @@
-<template>
+<!-- <template>
 	<div class="share">
 		<a href="#" @click="qqFriend" class="qqFriend">QQ好友分享</a>
 		<a href="#" @click="qqZone" class="qqZone">QQ空间分享</a>
 		<a href="#" @click="sinaWeiBo" class="sinaWeiBo">新浪微博分享</a>
 	</div>
-</template>
+</template> -->
 
 <script>
 export default {

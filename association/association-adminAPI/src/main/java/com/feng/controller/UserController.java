@@ -112,7 +112,7 @@ public class UserController {
 //        String codeKey = CookieUtil.getCookie(request, Constants.KAPTCHA_SESSION_KEY);
 //        String katchaCode = (String) redisOperatorService.getValue(codeKey);
 //        log.info("{}", katchaCode);
-
+//
 //        if (StringUtils.isEmpty(code) || !katchaCode.equals(code.trim())) {
 //            throw new BusinessException(ErrorEnum.USER_CODE_ERROR);
 //        }
